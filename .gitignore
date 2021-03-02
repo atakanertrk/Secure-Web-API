@@ -1,5 +1,5 @@
-/publish-files
-/WebApiSolution/.vs
-/WebApiSolution/WebApiProject/bin
-/WebApiSolution/WebApiProject/obj
-/WebApiSolution/WebApiProject/appsettings.Development.json
+publish-files/
+WebApiSolution/.vs/
+WebApiSolution/WebApiProject/bin/
+WebApiSolution/WebApiProject/obj/
+WebApiSolution/WebApiProject/appsettings.Development.json
