@@ -88,10 +88,9 @@ namespace WebApiProject.DataAccess
 
                 string sql = "INSERT INTO orders (MenuItemId,OrderAmount,UserId,Adress) VALUES (@MenuItemId,@OrderAmount,@UserId,@Adress);";
 
-                cnn.Execute(sql);
+                cnn.Execute(sql,p);
             }
         }
-        
        
         public List<OrderModel> GetUserOrders(int userId)
         {
@@ -117,7 +116,7 @@ namespace WebApiProject.DataAccess
 
                 string sql = "DELETE FROM orders WHERE Id=@Id;";
 
-                cnn.Execute(sql);
+                cnn.Execute(sql,p);
             }
         }
     }

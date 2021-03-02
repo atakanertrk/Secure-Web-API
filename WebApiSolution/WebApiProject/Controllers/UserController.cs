@@ -26,10 +26,7 @@ namespace WebApiProject.Controllers
         [HttpPut]
         public IActionResult CreateOrder([FromBody] OrderModel order)
         {
-            if (order.UserId != GetAuthenticatedUsersId())
-            {
-                return BadRequest();
-            }
+            order.UserId = GetAuthenticatedUsersId();
             _dataAccess.InsertOrder(order);
             return Ok();
         }
@@ -50,12 +47,39 @@ namespace WebApiProject.Controllers
             return BadRequest();
         }
 
+        private class OrderOfUserModel
+        {
+            public int Id { get; set; }
+            public int MenuItemId { get; set; }
+            public string MenuItemName { get; set; }
+            public float OrderAmount { get; set; }
+            public int UserId { get; set; }
+            public string Adress { get; set; }
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult OrdersOfUser()
+        {
+            int userId = GetAuthenticatedUsersId();
+            var orders = _dataAccess.GetUserOrders(userId);
+            return Ok(orders);
+        }
+
         [HttpGet]
         public IActionResult GetMenuItemsList()
         {
             var menu = _dataAccess.GetMenuItems();
             return Ok(menu);
         }
+
+        [HttpGet]
+        public IActionResult GetItemDetailsById([FromQuery] int id)
+        {
+            var details = _dataAccess.GetMenuItemInfoById(id);
+            return Ok(details);
+        }
+
         public int GetAuthenticatedUsersId()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
