@@ -32,10 +32,11 @@ namespace WebApiProject.Helpers
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Issuer"],
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(5),
+                expires: DateTime.UtcNow.AddMinutes(20),
                 signingCredentials: credentials);
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
             return encodetoken;
         }
+
     }
 }

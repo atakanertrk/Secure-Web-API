@@ -62,21 +62,6 @@ namespace WebApiProject.DataAccess
                 return output;
             }
         }
-        public void InsertOrder(OrderModel order)
-        {
-            using (IDbConnection cnn = new MySqlConnection(_conStr))
-            {
-                var p = new DynamicParameters();
-                p.Add("@MenuItemId", order.MenuItemId);
-                p.Add("@OrderAmount", order.OrderAmount);
-                p.Add("@UserId", order.UserId);
-
-                string sql = "INSERT INTO orders (MenuItemId,OrderAmount,UserId) VALUES (@MenuItemId,@OrderAmount,@UserId);";
-
-                cnn.Execute(sql);
-            }
-        }
-        
         public MenuItemModel GetMenuItemInfoById(int id)
         {
             using (IDbConnection cnn = new MySqlConnection(_conStr))
@@ -91,6 +76,23 @@ namespace WebApiProject.DataAccess
                 return output;
             }
         }
+        public void InsertOrder(OrderModel order)
+        {
+            using (IDbConnection cnn = new MySqlConnection(_conStr))
+            {
+                var p = new DynamicParameters();
+                p.Add("@MenuItemId", order.MenuItemId);
+                p.Add("@OrderAmount", order.OrderAmount);
+                p.Add("@UserId", order.UserId);
+                p.Add("@Adress", order.Adress);
+
+                string sql = "INSERT INTO orders (MenuItemId,OrderAmount,UserId,Adress) VALUES (@MenuItemId,@OrderAmount,@UserId,@Adress);";
+
+                cnn.Execute(sql);
+            }
+        }
+        
+       
         public List<OrderModel> GetUserOrders(int userId)
         {
             using (IDbConnection cnn = new MySqlConnection(_conStr))
@@ -103,6 +105,19 @@ namespace WebApiProject.DataAccess
                 var output = cnn.Query<OrderModel>(sql, p).ToList();
 
                 return output;
+            }
+        }
+
+        public void DeleteOrder(int orderId)
+        {
+            using (IDbConnection cnn = new MySqlConnection(_conStr))
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", orderId);
+
+                string sql = "DELETE FROM orders WHERE Id=@Id;";
+
+                cnn.Execute(sql);
             }
         }
     }

@@ -11,5 +11,6 @@ namespace WebApiProject.Models
         public int MenuItemId { get; set; }
         public float OrderAmount { get; set; }
         public int UserId { get; set; }
+        public string Adress { get; set; }
     }
 }

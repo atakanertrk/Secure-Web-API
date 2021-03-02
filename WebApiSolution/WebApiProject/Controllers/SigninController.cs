@@ -31,7 +31,7 @@ namespace WebApiProject.Controllers
             {
                 int insertedId = _dataAccess.InsertUser(user);
                 string token = _token.GenerateJSONWebToken(insertedId);
-                return Ok(token);
+                return Ok(new { token = token});
             }
             catch (Exception)
             {

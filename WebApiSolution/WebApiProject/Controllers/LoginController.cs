@@ -28,7 +28,7 @@ namespace WebApiProject.Controllers
             string hashedUserInfo = CryptoOperations.EncryptSHA256(login.UserName + login.Password);
             UserModel user = new UserModel { HashedUserIdentifier = hashedUserInfo };
             var isValid = _dataAccess.IsUserValid(user);
-            if (isValid == null)
+            if (isValid == -1)
             {
                 return Unauthorized();
             }
@@ -37,3 +37,4 @@ namespace WebApiProject.Controllers
         }
     }
 }
+
