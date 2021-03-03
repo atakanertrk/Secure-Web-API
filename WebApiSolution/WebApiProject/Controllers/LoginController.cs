@@ -15,11 +15,11 @@ namespace WebApiProject.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private MySqlDataAccess _dataAccess;
+        private IDataAccess _dataAccess;
         private TokenHelper _token;
         public LoginController(IConfiguration config)
         {
-            _dataAccess = new MySqlDataAccess(config);
+            _dataAccess = new SqlServerDataAccess(config);
             _token = new TokenHelper(config);
         }
         /// <summary>
@@ -40,4 +40,3 @@ namespace WebApiProject.Controllers
         }
     }
 }
-

@@ -32,7 +32,7 @@ namespace WebApiProject
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("CorstPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
+                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().Build());
             });
 
             services.AddControllers();
@@ -75,6 +75,8 @@ namespace WebApiProject
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
 

@@ -10,7 +10,7 @@ using WebApiProject.Models;
 
 namespace WebApiProject.DataAccess
 {
-    public class MySqlDataAccess
+    public class MySqlDataAccess : IDataAccess
     {
         private string _conStr;
         public MySqlDataAccess(IConfiguration config)
@@ -88,10 +88,10 @@ namespace WebApiProject.DataAccess
 
                 string sql = "INSERT INTO orders (MenuItemId,OrderAmount,UserId,Adress) VALUES (@MenuItemId,@OrderAmount,@UserId,@Adress);";
 
-                cnn.Execute(sql,p);
+                cnn.Execute(sql, p);
             }
         }
-       
+
         public List<OrderModel> GetUserOrders(int userId)
         {
             using (IDbConnection cnn = new MySqlConnection(_conStr))
@@ -116,7 +116,7 @@ namespace WebApiProject.DataAccess
 
                 string sql = "DELETE FROM orders WHERE Id=@Id;";
 
-                cnn.Execute(sql,p);
+                cnn.Execute(sql, p);
             }
         }
     }

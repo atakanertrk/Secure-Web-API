@@ -17,10 +17,10 @@ namespace WebApiProject.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private MySqlDataAccess _dataAccess;
+        private IDataAccess _dataAccess;
         public UserController(IConfiguration config)
         {
-            _dataAccess = new MySqlDataAccess(config);
+            _dataAccess = new SqlServerDataAccess(config);
         }
         /// <summary>
         /// id and userId are not required (require bearer token)
