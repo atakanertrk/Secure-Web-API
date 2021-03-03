@@ -38,6 +38,7 @@ namespace WebApiProject.Helpers
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
             return encodetoken;
         }
+      
 
     }
 }

@@ -22,20 +22,34 @@ namespace WebApiProject.Controllers
         {
             _dataAccess = new MySqlDataAccess(config);
         }
+        /// <summary>
+        /// id and userId are not required (require bearer token)
+        /// </summary>
         [Authorize]
         [HttpPut]
         public IActionResult CreateOrder([FromBody] OrderModel order)
         {
-            order.UserId = GetAuthenticatedUsersId();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IList<Claim> claim = identity.Claims.ToList();
+            int userIdFromToken = Convert.ToInt32(claim[0].Value);
+
+            order.UserId = userIdFromToken;
             _dataAccess.InsertOrder(order);
             return Ok();
         }
 
+        /// <summary>
+        /// Deletes specified order of user. Delete works if user owns passed id of order. (require bearer token)
+        /// </summary>
         [Authorize]
         [HttpDelete]
         public IActionResult DeleteOrder([FromQuery] string orderId)
         {
-            var usersOrders = _dataAccess.GetUserOrders(GetAuthenticatedUsersId());
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IList<Claim> claim = identity.Claims.ToList();
+            int userIdFromToken = Convert.ToInt32(claim[0].Value);
+
+            var usersOrders = _dataAccess.GetUserOrders(userIdFromToken);
             foreach (var orders in usersOrders)
             {
                 if (orders.Id.ToString() == orderId)
@@ -56,12 +70,18 @@ namespace WebApiProject.Controllers
             public int UserId { get; set; }
             public string Adress { get; set; }
         }
-
+        /// <summary>
+        /// Returns list of user's order. (require bearer token)
+        /// </summary>
         [Authorize]
         [HttpGet]
         public IActionResult OrdersOfUser()
         {
-            int userId = GetAuthenticatedUsersId();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IList<Claim> claim = identity.Claims.ToList();
+            int userIdFromToken = Convert.ToInt32(claim[0].Value);
+
+            int userId = userIdFromToken;
             var orders = _dataAccess.GetUserOrders(userId);
             return Ok(orders);
         }
@@ -80,11 +100,6 @@ namespace WebApiProject.Controllers
             return Ok(details);
         }
 
-        public int GetAuthenticatedUsersId()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claim = identity.Claims.ToList();
-            return Convert.ToInt32(claim[0].Value);
-        }
+
     }
 }

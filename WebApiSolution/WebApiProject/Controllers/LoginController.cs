@@ -22,6 +22,9 @@ namespace WebApiProject.Controllers
             _dataAccess = new MySqlDataAccess(config);
             _token = new TokenHelper(config);
         }
+        /// <summary>
+        /// Returns Bearer Token if login success. Otherwise, returns 401 status code
+        /// </summary>
         [HttpPost]
         public IActionResult Post([FromBody] LoginModel login)
         {

@@ -22,6 +22,9 @@ namespace WebApiProject.Controllers
             _dataAccess = new MySqlDataAccess(config);
             _token = new TokenHelper(config);
         }
+        /// <summary>
+        /// Returns Bearer token if SignIn suceess, Otherwise returns 400 bad request
+        /// </summary>
         [HttpPost]
         public IActionResult Post([FromBody] LoginModel signin)
         {
