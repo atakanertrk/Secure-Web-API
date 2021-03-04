@@ -66,8 +66,8 @@ namespace WebApiProject.Controllers
             public int Id { get; set; }
             public int MenuItemId { get; set; }
             public string MenuItemName { get; set; }
-            public float OrderAmount { get; set; }
-            public int UserId { get; set; }
+            public decimal OrderAmount { get; set; }
+            public decimal TotalPrice { get; set; }
             public string Adress { get; set; }
         }
         /// <summary>
@@ -81,9 +81,23 @@ namespace WebApiProject.Controllers
             IList<Claim> claim = identity.Claims.ToList();
             int userIdFromToken = Convert.ToInt32(claim[0].Value);
 
-            int userId = userIdFromToken;
-            var orders = _dataAccess.GetUserOrders(userId);
-            return Ok(orders);
+            var orders = _dataAccess.GetUserOrders(userIdFromToken);
+
+            var listOfUserOrders = new List<OrderOfUserModel>();
+            foreach (var order in orders)
+            {
+                var menuItemInfo = _dataAccess.GetMenuItemInfoById(order.MenuItemId);
+                var orderOfUserModel = new OrderOfUserModel{
+                    Id=order.Id,
+                    MenuItemId=order.MenuItemId,
+                    MenuItemName=menuItemInfo.ItemName,
+                    OrderAmount=order.OrderAmount,
+                    Adress=order.Adress,
+                    TotalPrice=order.OrderAmount*menuItemInfo.Price
+                };
+                listOfUserOrders.Add(orderOfUserModel);
+            }
+            return Ok(listOfUserOrders);
         }
 
         [HttpGet]
