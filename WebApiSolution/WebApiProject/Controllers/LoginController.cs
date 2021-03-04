@@ -28,14 +28,13 @@ namespace WebApiProject.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] LoginModel login)
         {
-            string hashedUserInfo = CryptoOperations.EncryptSHA256(login.UserName + login.Password);
-            UserModel user = new UserModel { HashedUserIdentifier = hashedUserInfo };
-            var isValid = _dataAccess.IsUserValid(user);
-            if (isValid == -1)
+            UserModel user = new UserModel { HashedUserIdentifier = login.hashedUserNameAndPassword };
+            var userId = _dataAccess.IsUserValid(user);
+            if (userId == -1)
             {
                 return Unauthorized();
             }
-            string token = _token.GenerateJSONWebToken((int)isValid);
+            string token = _token.GenerateJSONWebToken((int)userId);
             return Ok(new { token= token });
         }
     }

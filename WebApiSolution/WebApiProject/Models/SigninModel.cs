@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace WebApiProject.Models
 {
-    public class LoginModel
+    public class SigninModel
     {
-        public string hashedUserNameAndPassword { get; set; }
+        public string UserName { get; set; }
+        public string HashedUserNameAndPassword { get; set; }
     }
 }

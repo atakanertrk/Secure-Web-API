@@ -26,10 +26,9 @@ namespace WebApiProject.Controllers
         /// Returns Bearer token if SignIn suceess, Otherwise returns 400 bad request
         /// </summary>
         [HttpPost]
-        public IActionResult Post([FromBody] LoginModel signin)
+        public IActionResult Post([FromBody] SigninModel signin)
         {
-            string hashedUserIdentifier = CryptoOperations.EncryptSHA256(signin.UserName + signin.Password);
-            UserModel user = new UserModel { UserName = signin.UserName, HashedUserIdentifier = hashedUserIdentifier };
+            UserModel user = new UserModel { UserName = signin.UserName, HashedUserIdentifier = signin.HashedUserNameAndPassword };
             try
             {
                 int insertedId = _dataAccess.InsertUser(user);
