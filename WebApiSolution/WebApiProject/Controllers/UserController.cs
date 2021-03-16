@@ -23,7 +23,7 @@ namespace WebApiProject.Controllers
             _dataAccess = new SqlServerDataAccess(config);
         }
         /// <summary>
-        /// id and userId are not required (require bearer token)
+        /// id and userId are not required (can be passed null or 0) (bearer token is required)
         /// </summary>
         [Authorize]
         [HttpPut]
@@ -39,7 +39,7 @@ namespace WebApiProject.Controllers
         }
 
         /// <summary>
-        /// Deletes specified order of user. Delete works if user owns passed id of order. (require bearer token)
+        /// Deletes specified order of user. Delete works only if user owns that passed id of order. (requires bearer token for identification)
         /// </summary>
         [Authorize]
         [HttpDelete]
@@ -71,7 +71,7 @@ namespace WebApiProject.Controllers
             public string Adress { get; set; }
         }
         /// <summary>
-        /// Returns list of user's order. (require bearer token)
+        /// Returns list of user's order. (requires bearer token)
         /// </summary>
         [Authorize]
         [HttpGet]
@@ -99,14 +99,18 @@ namespace WebApiProject.Controllers
             }
             return Ok(listOfUserOrders);
         }
-
+        /// <summary>
+        /// Public endpoint, no authorization
+        /// </summary>
         [HttpGet]
         public IActionResult GetMenuItemsList()
         {
             var menu = _dataAccess.GetMenuItems();
             return Ok(menu);
         }
-
+        /// <summary>
+        /// Public endpoint, no authorization
+        /// </summary>
         [HttpGet]
         public IActionResult GetItemDetailsById([FromQuery] int id)
         {

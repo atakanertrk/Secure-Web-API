@@ -26,15 +26,15 @@ namespace WebApiProject.Controllers
         /// Returns Bearer Token if login success. Otherwise, returns 401 status code
         /// </summary>
         [HttpPost]
-        public IActionResult Post([FromBody] LoginModel login)
+        public IActionResult Post([FromBody] LogInModel login)
         {
             UserModel user = new UserModel { HashedUserIdentifier = login.hashedUserNameAndPassword };
-            var userId = _dataAccess.IsUserValid(user);
-            if (userId == -1)
+            int? userIdIfValid = _dataAccess.IsUserValid(user);
+            if (userIdIfValid == -1)
             {
                 return Unauthorized();
             }
-            string token = _token.GenerateJSONWebToken((int)userId);
+            string token = _token.GenerateJSONWebToken((int)userIdIfValid);
             return Ok(new { token= token });
         }
     }

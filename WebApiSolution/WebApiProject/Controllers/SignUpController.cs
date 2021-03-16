@@ -13,22 +13,22 @@ namespace WebApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SigninController : ControllerBase
+    public class SignUpController : ControllerBase
     {
         private IDataAccess _dataAccess;
         private TokenHelper _token;
-        public SigninController(IConfiguration config)
+        public SignUpController(IConfiguration config)
         {
             _dataAccess = new SqlServerDataAccess(config);
             _token = new TokenHelper(config);
         }
         /// <summary>
-        /// Returns Bearer token if SignIn suceess, Otherwise returns 400 bad request
+        /// Returns Bearer token if SignUp suceess, Otherwise returns 400 bad request
         /// </summary>
         [HttpPost]
-        public IActionResult Post([FromBody] SigninModel signin)
+        public IActionResult Post([FromBody] SignUpModel signup)
         {
-            UserModel user = new UserModel { UserName = signin.UserName, HashedUserIdentifier = signin.HashedUserNameAndPassword };
+            UserModel user = new UserModel { UserName = signup.UserName, HashedUserIdentifier = signup.HashedUserNameAndPassword };
             try
             {
                 int insertedId = _dataAccess.InsertUser(user);
