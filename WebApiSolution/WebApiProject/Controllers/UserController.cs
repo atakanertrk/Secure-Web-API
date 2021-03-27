@@ -10,6 +10,10 @@ using WebApiProject.Models;
 using WebApiProject.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace WebApiProject.Controllers
 {
@@ -118,6 +122,38 @@ namespace WebApiProject.Controllers
             return Ok(details);
         }
 
+        //[HttpGet]
+        //[Authorize(AuthenticationSchemes = GoogleDefaults.AuthenticationScheme)]
+        //public async Task<IActionResult> HelloAsync()
+        //{
+        //    var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
+        //    var claims = result.Principal.Identities
+        //        .FirstOrDefault().Claims.Select(claim => new
+        //        {
+        //            claim.Issuer,
+        //            claim.OriginalIssuer,
+        //            claim.Type,
+        //            claim.Value
+        //        });
+        //    return Ok();
+        //}
+        //[HttpGet]
+        //public async Task<IActionResult> Redirected()
+        //{
+        //    var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        //    var claims = result.Principal.Identities
+        //        .FirstOrDefault().Claims.Select(claim => new
+        //        {
+        //            claim.Issuer,
+        //            claim.OriginalIssuer,
+        //            claim.Type,
+        //            claim.Value
+        //        });
+
+        //    return Ok(claims);
+        //   // return Ok(User.Identity.Name);
+        //}
     }
 }

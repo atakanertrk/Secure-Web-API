@@ -1,3 +1,6 @@
 ﻿	<modules runAllManagedModulesForAllRequests="true">
 	  <remove name="WebDAVModule"/>
 	</modules>
+
+
+	JWT token automatically validated by asp.net core middleware which we implement at startup.cs

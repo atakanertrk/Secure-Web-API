@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -22,6 +23,7 @@ namespace WebApiProject.Controllers
             _dataAccess = new SqlServerDataAccess(config);
             _token = new TokenHelper(config);
         }
+
         /// <summary>
         /// Returns Bearer Token if login success. Otherwise, returns 401 status code
         /// </summary>
@@ -37,5 +39,8 @@ namespace WebApiProject.Controllers
             string token = _token.GenerateJSONWebToken((int)userIdIfValid);
             return Ok(new { token= token });
         }
+
+
+
     }
 }
